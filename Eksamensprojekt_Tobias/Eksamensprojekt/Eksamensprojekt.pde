@@ -1,7 +1,8 @@
 // Gør plads til forskellige variabler, og giver dem værdier
 boolean slut=false, powerupcheck=false, powerup1=false, powerup2=false, cd1=false, cd2=false,
-  match1=false, match2=false, tur1=false, tur2=false, startskærm=true, spil=false, spil1=false,
+  match1=false, match2=false, tur1=false, tur2=false, startscreen=true, spil=false, spil1=false,
   spil2=false;
+  
 String start="Start", regler="Målet med spillet",
   welcome2=" Hver tur slår begge spillere en terning. \n"+
   "Den der slår lavest mister et liv.\n\n Du skal reducere din modstanders liv til 0\n"+
@@ -10,28 +11,36 @@ String start="Start", regler="Målet med spillet",
   "ganget med antal\n personer på holdet.\n\n Hvis Hans spiller dette spil skal han\n"+
   "drikke dobbelt så meget",
   powerups="I spillet er der forskellige power-ups man kan bruge:";
-PImage øllebajer, terning, terning2, side1, side2, side3, side4, side5, side6, power1, power1m, power2, power2m;
-int tur=0, starth=250, startb=500, rectb, recth=height, kast, kast2, kastpower1, kastpower2, kastpower12, kastpower22, liv1=10, liv2=10;
+  
+PImage bajere, terning, terning2, power1, power1m, power2, power2m;
+
+
+
+int tur=0, start_h=250, start_b=500, rect_b, rect_h=height, kast, kast2,
+kastpower1, kastpower2, kastpower12, kastpower22, liv1=10, liv2=10;
+
 PFont intro;
 
-
+// Opretter et array af strings med navne på billederne af terningerne og derefter
+// et PImage array som jeg loader billederne ind i senere
+String[] side_navne = {"side1.png", "side2.png","side3.png", "side4.png", "side5.png","side6.png"};
+PImage[] sider_img;
 
 void setup() {
   // Sætter programmet til at fylde hele skærmen, og initialiserer alle filer som jeg skal bruge i mit program
   fullScreen();
-  øllebajer=loadImage("øl2.png");
+  bajere=loadImage("øl2.png");
   terning=loadImage("Terning.png");
   terning2=loadImage("Terning2.png");
-  side1=loadImage("side1.png");
-  side2=loadImage("side2.png");
-  side3=loadImage("side3.png");
-  side4=loadImage("side4.png");
-  side5=loadImage("side5.png");
-  side6=loadImage("side6.png");
   power1=loadImage("power1.png");
   power1m=loadImage("power1m.png");
   power2=loadImage("power2.png");
   power2m=loadImage("power2m.png");
+  
+  for (int i=0; i < side_navne.length; i++){
+    String imageName = side_navne[i];
+    sider_img[i] = loadImage(imageName);
+  }
 
   intro=createFont("intro.ttf", 50);
   textFont(intro);
@@ -40,12 +49,11 @@ void setup() {
 
 void draw() {
 
-  if (startskærm==true)
+  if (startscreen==true)
   {
     //Opsætter startmenuen
-    background(øllebajer);
+    background(bajere);
     fill(0);
-
 
     textAlign(CENTER, CENTER);
     imageMode(CENTER);
@@ -58,7 +66,6 @@ void draw() {
     rectMode(CORNER);
     fill(#30A55A);
     rect(width-400, height-250, 275, 125);
-
 
     textSize(60);
     fill(#58401E);
@@ -120,7 +127,7 @@ void draw() {
   if (liv1==0) {
     slut=true;
     spil=false;
-    background(øllebajer);
+    background(bajere);
 
 
     fill(#C9A672);
@@ -152,7 +159,7 @@ void draw() {
   } else if (liv2==0) {
     slut=true;
     spil=false;
-    background(øllebajer);
+    background(bajere);
 
 
     fill(#C9A672);
@@ -267,8 +274,8 @@ void keyPressed() {
 
 
 void mousePressed() {
-  if (startskærm==true&&mouseX>=width-400&&mouseX<=width-400+275&&mouseY>=height-250&&mouseY<=height-250+125 ) {
-    startskærm=false;
+  if (startscreen==true&&mouseX>=width-400&&mouseX<=width-400+275&&mouseY>=height-250&&mouseY<=height-250+125 ) {
+    startscreen=false;
     spil=true;
     background(#C9A672);
 
@@ -295,7 +302,7 @@ void mousePressed() {
       match2=false;
       tur1=false; 
       tur2=false; 
-      startskærm=true; 
+      startscreen=true; 
       spil=false;
       spil1=false;
       spil2=false;
@@ -329,71 +336,47 @@ void terning2()
 
 void terningekast() {
   imageMode(CENTER);
-  if (kast==1) {
-    image(side1, width/3, height/2, 500, 300);
-  } else if (kast==2) {
-    image(side2, width/3, height/2, 500, 300);
-  } else if (kast==3) {
-    image(side3, width/3, height/2, 500, 300);
-  } else if (kast==4) {
-    image(side4, width/3, height/2, 500, 300);
-  } else if (kast==5) {
-    image(side5, width/3, height/2, 500, 300);
-  } else if (kast==6) {
-    image(side6, width/3, height/2, 500, 300);
-  }
+  image(sider_img[kast-1], width/3, height/2, 500, 300);
 }
 void terningekastpower1() {
   imageMode(CENTER);
   if (kastpower1==2) {
-    image(side1, width/3, height/2, 500, 300);
-    image(side1, width/3, height/3, 500, 300);
+    image(sider_img[0], width/3, height/2, 500, 300);
+    image(sider_img[0], width/3, height/2, 500, 300);
   } else if (kastpower1==3) {
-    image(side2, width/3, height/2, 500, 300);
-    image(side1, width/3, height/3, 500, 300);
+    image(sider_img[1], width/3, height/2, 500, 300);
+    image(sider_img[0], width/3, height/2, 500, 300);
   } else if (kastpower1==4) {
-    image(side2, width/3, height/2, 500, 300);
-    image(side2, width/3, height/3, 500, 300);
+    image(sider_img[1], width/3, height/2, 500, 300);
+    image(sider_img[1], width/3, height/2, 500, 300);
   } else if (kastpower1==5) {
-    image(side3, width/3, height/2, 500, 300);
-    image(side2, width/3, height/3, 500, 300);
+    image(sider_img[2], width/3, height/2, 500, 300);
+    image(sider_img[1], width/3, height/2, 500, 300);
   } else if (kastpower1==6) {
-    image(side5, width/3, height/2, 500, 300);
-    image(side1, width/3, height/3, 500, 300);
+    image(sider_img[4], width/3, height/2, 500, 300);
+    image(sider_img[0], width/3, height/2, 500, 300);
   } else if (kastpower1==7) {
-    image(side6, width/3, height/2, 500, 300);
-    image(side1, width/3, height/3, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
+    image(sider_img[0], width/3, height/2, 500, 300);
   } else if (kastpower1==8) {
-    image(side6, width/3, height/2, 500, 300);
-    image(side2, width/3, height/3, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
+    image(sider_img[1], width/3, height/2, 500, 300);
   } else if (kastpower1==9) {
-    image(side6, width/3, height/2, 500, 300);
-    image(side3, width/3, height/3, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
+    image(sider_img[2], width/3, height/2, 500, 300);
   } else if (kastpower1==10) {
-    image(side6, width/3, height/2, 500, 300);
-    image(side4, width/3, height/3, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
+    image(sider_img[3], width/3, height/2, 500, 300);
   } else if (kastpower1==11) {
-    image(side6, width/3, height/2, 500, 300);
-    image(side5, width/3, height/3, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
+    image(sider_img[4], width/3, height/2, 500, 300);
   } else if (kastpower1==12) {
-    image(side6, width/3, height/2, 500, 300);
-    image(side6, width/3, height/3, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
+    image(sider_img[5], width/3, height/2, 500, 300);
   }
 }
 
 void terningekast2() {
   imageMode(CENTER);
-  if (kast2==1) {
-    image(side1, width*2/3, height/2, 500, 300);
-  } else if (kast2==2) {
-    image(side2, width*2/3, height/2, 500, 300);
-  } else if (kast2==3) {
-    image(side3, width*2/3, height/2, 500, 300);
-  } else if (kast2==4) {
-    image(side4, width*2/3, height/2, 500, 300);
-  } else if (kast2==5) {
-    image(side5, width*2/3, height/2, 500, 300);
-  } else if (kast2==6) {
-    image(side6, width*2/3, height/2, 500, 300);
-  }
+  image(sider_img[kast2-1], width/3, height/2, 500, 300);
 }

@@ -1,0 +1,24 @@
+SLI-AL Eksamen concepter:
+
+Worshop 1:
+- Gauss elimination
+- Row echelon
+
+Fremlæg question 3
+
+- linæare ligningssystemer, matricer, og echelonform + oppgaveregning
+- algebraiske operationer med matriser
+- Lineærkombinationer, span, lineær uafhengighed, dimension
+- Lineære transformationer og deres sammenhæng med matricer
+- Invertible lineære transformationer og inverse matriser
+- egenværdier og egenvektorer
+
+Workshop 2: 
+
+
+Workshop 3:
+
+
+Workshop 4:
+
+
